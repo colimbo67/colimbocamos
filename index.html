@@ -218,14 +218,25 @@ let allData=[];
 let pickedSev='';
 let pendingImgs=[];
 let votedIds=[];
+let isSaving=false;
+let refreshTimer=null;
 try{votedIds=JSON.parse(localStorage.getItem('colimbo-votes')||'[]')}catch(e){}
 const SKEY='colimbocamos-v2';
 
 document.getElementById('f-fecha').valueAsDate=new Date();
 loadData();
-setInterval(loadData,20000);
+scheduleRefresh();
+
+function scheduleRefresh(){
+  if(refreshTimer)clearTimeout(refreshTimer);
+  refreshTimer=setTimeout(async()=>{
+    if(!isSaving)await loadData();
+    scheduleRefresh();
+  },25000);
+}
 
 async function loadData(){
+  if(isSaving)return; // never overwrite while a save is in progress
   try{
     const r=await window.storage.get(SKEY,true);
     allData=r?JSON.parse(r.value):[];
@@ -234,8 +245,16 @@ async function loadData(){
 }
 
 async function saveData(){
-  try{await window.storage.set(SKEY,JSON.stringify(allData),true);}
-  catch(e){toast('Error al guardar en la nube',true);}
+  isSaving=true;
+  if(refreshTimer){clearTimeout(refreshTimer);refreshTimer=null;}
+  try{
+    await window.storage.set(SKEY,JSON.stringify(allData),true);
+  }catch(e){
+    toast('Error al guardar en la nube',true);
+  }finally{
+    isSaving=false;
+    scheduleRefresh(); // restart refresh cycle after save completes
+  }
 }
 
 function showView(v,tab){
