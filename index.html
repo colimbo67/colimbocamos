@@ -1,1 +1,364 @@
-# colimbocamos
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Colimbocamos — Incidencias</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080a0f;--bg2:#0f1218;--card:#13171f;--card2:#191e28;--border:#1e2535;--border2:#252d3d;--red:#e8402a;--red2:#ff6b52;--orange:#f5861f;--yellow:#f5c842;--green:#2ecc8f;--blue:#3d8ef5;--text:#dde3ef;--text2:#8a95aa;--text3:#4a5468}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg-glow::before{content:'';position:absolute;top:-20%;left:-10%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(232,64,42,.08) 0%,transparent 65%)}
+.bg-glow::after{content:'';position:absolute;bottom:-20%;right:-10%;width:50%;height:50%;background:radial-gradient(ellipse,rgba(61,142,245,.06) 0%,transparent 65%)}
+header{position:sticky;top:0;z-index:10;padding:1.2rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(10px);background:rgba(8,10,15,.85)}
+.logo-mark{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;background:linear-gradient(135deg,var(--red),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.logo-sub{font-size:.65rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:-.2rem}
+.online-dot{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--green);font-weight:600;letter-spacing:.5px}
+.online-dot::before{content:'';width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+.nav-tabs{position:relative;z-index:5;display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 2rem;background:var(--bg)}
+.nav-tab{padding:.85rem 1.4rem;font-size:.82rem;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:.4rem}
+.nav-tab:hover{color:var(--text2)}.nav-tab.active{color:var(--red);border-bottom-color:var(--red)}
+.nav-badge{background:var(--red);color:#fff;font-size:.6rem;padding:.1rem .4rem;border-radius:20px;font-weight:700}
+.view{display:none;position:relative;z-index:1}.view.active{display:block}
+.form-wrap{max-width:760px;margin:0 auto;padding:2.5rem 1.5rem}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:2px;margin-bottom:.4rem;line-height:1}
+.section-sub{color:var(--text2);font-size:.9rem;margin-bottom:2rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.form-field{display:flex;flex-direction:column;gap:.45rem}.form-field.full{grid-column:1/-1}
+.form-field label{font-size:.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+.form-field input,.form-field select,.form-field textarea{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.92rem;outline:none;transition:border-color .2s,box-shadow .2s}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(232,64,42,.1)}
+.form-field textarea{resize:vertical;min-height:120px;line-height:1.6}
+select option{background:#1a1f2b}
+.sev-row{display:flex;gap:.6rem}
+.sev-opt{flex:1;padding:.65rem .5rem;border-radius:9px;border:1px solid var(--border);background:var(--card);color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;text-align:center;transition:all .2s;text-transform:uppercase;letter-spacing:.5px}
+.sev-opt:hover{border-color:var(--border2);color:var(--text)}
+.sev-opt.s-leve{border-color:var(--green);color:var(--green);background:rgba(46,204,143,.08)}
+.sev-opt.s-media{border-color:var(--yellow);color:var(--yellow);background:rgba(245,200,66,.08)}
+.sev-opt.s-grave{border-color:var(--red);color:var(--red);background:rgba(232,64,42,.08)}
+.img-upload{border:1.5px dashed var(--border2);border-radius:12px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--card)}
+.img-upload:hover{border-color:var(--red);background:rgba(232,64,42,.04)}
+.img-upload input{display:none}.img-upload-icon{font-size:1.8rem;margin-bottom:.4rem}.img-upload-text{font-size:.8rem;color:var(--text3)}
+.img-previews{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
+.img-preview{width:70px;height:70px;border-radius:8px;object-fit:cover;border:1px solid var(--border2)}
+.btn-submit{width:100%;margin-top:1.5rem;padding:1.1rem;background:linear-gradient(135deg,var(--red),var(--orange));border:none;border-radius:12px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;cursor:pointer;transition:transform .15s,box-shadow .2s;box-shadow:0 6px 25px rgba(232,64,42,.35)}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(232,64,42,.5)}
+.btn-submit:active{transform:translateY(0)}.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.list-wrap{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem}
+.toolbar{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin-bottom:2rem}
+.search-box{flex:1;min-width:200px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s}
+.search-box:focus{border-color:var(--blue)}
+.filter-sel{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.82rem;outline:none;cursor:pointer}
+.btn-export{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:.7rem 1.2rem;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-export:hover{border-color:var(--green);color:var(--green)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.3rem;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat-card.s-total::before{background:linear-gradient(90deg,var(--blue),var(--green))}
+.stat-card.s-grave::before{background:linear-gradient(90deg,var(--red),var(--orange))}
+.stat-card.s-media::before{background:linear-gradient(90deg,var(--orange),var(--yellow))}
+.stat-card.s-hoy::before{background:linear-gradient(90deg,var(--green),var(--blue))}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;line-height:1;margin-bottom:.15rem}
+.stat-card.s-total .stat-n{color:var(--blue)}.stat-card.s-grave .stat-n{color:var(--red)}.stat-card.s-media .stat-n{color:var(--orange)}.stat-card.s-hoy .stat-n{color:var(--green)}
+.stat-l{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;font-weight:600}
+.incident-card{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:1rem;overflow:hidden;transition:border-color .2s,transform .2s;animation:slideIn .35s ease both}
+.incident-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.inc-header{display:flex;gap:1rem;align-items:flex-start;padding:1.3rem 1.4rem 1rem}
+.sev-bar{width:3px;border-radius:3px;align-self:stretch;flex-shrink:0}
+.sev-bar.leve{background:var(--green);box-shadow:0 0 8px rgba(46,204,143,.4)}
+.sev-bar.media{background:var(--yellow);box-shadow:0 0 8px rgba(245,200,66,.4)}
+.sev-bar.grave{background:var(--red);box-shadow:0 0 10px rgba(232,64,42,.5)}
+.inc-main{flex:1;min-width:0}
+.inc-row1{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.3rem}
+.inc-profe{font-size:1rem;font-weight:700}.inc-time{font-size:.7rem;color:var(--text3);white-space:nowrap}
+.inc-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.55rem}
+.tag{font-size:.68rem;font-weight:600;padding:.2rem .6rem;border-radius:6px;text-transform:uppercase;letter-spacing:.5px}
+.tag-alumno{background:rgba(61,142,245,.12);color:var(--blue)}
+.tag-asig{background:rgba(139,148,170,.1);color:var(--text3);border:1px solid var(--border2)}
+.tag-tipo{background:rgba(245,134,31,.1);color:var(--orange)}
+.tag-sev.leve{background:rgba(46,204,143,.1);color:var(--green)}
+.tag-sev.media{background:rgba(245,200,66,.1);color:var(--yellow)}
+.tag-sev.grave{background:rgba(232,64,42,.1);color:var(--red)}
+.inc-desc{font-size:.88rem;color:var(--text2);line-height:1.6}
+.inc-actions{display:flex;gap:.5rem;align-items:center;flex-shrink:0;padding-top:.2rem}
+.vote-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:.35rem .7rem;cursor:pointer;display:flex;align-items:center;gap:.35rem;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--text3);transition:all .2s}
+.vote-btn:hover{border-color:var(--orange);color:var(--orange)}
+.vote-btn.voted{border-color:var(--orange);color:var(--orange);background:rgba(245,134,31,.08)}
+.del-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:.35rem .6rem;cursor:pointer;color:var(--text3);font-size:.85rem;transition:all .2s}
+.del-btn:hover{border-color:var(--red);color:var(--red);background:rgba(232,64,42,.08)}
+.inc-images{display:flex;gap:.5rem;padding:.2rem 1.4rem 1.2rem 3.2rem;flex-wrap:wrap}
+.inc-img{width:80px;height:80px;border-radius:8px;object-fit:cover;border:1px solid var(--border2);cursor:pointer;transition:transform .2s}
+.inc-img:hover{transform:scale(1.05)}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:center;justify-content:center;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:12px;box-shadow:0 0 60px rgba(0,0,0,.8)}
+.empty{text-align:center;padding:4rem 1rem;color:var(--text3)}
+.empty-icon{font-size:3rem;margin-bottom:1rem;filter:grayscale(1);opacity:.4}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--green);color:#051a0f;padding:.85rem 2rem;border-radius:30px;font-weight:700;font-size:.88rem;z-index:500;transition:transform .4s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;box-shadow:0 8px 30px rgba(46,204,143,.4)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.err{background:var(--red);color:#fff;box-shadow:0 8px 30px rgba(232,64,42,.4)}
+.loading{display:flex;gap:.4rem;align-items:center;justify-content:center;padding:3rem;color:var(--text3)}
+.dot-load{width:8px;height:8px;background:var(--red);border-radius:50%;animation:dotBounce 1.2s infinite both}
+.dot-load:nth-child(2){animation-delay:.2s}.dot-load:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dotBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-10px)}}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr}.form-field.full{grid-column:1}.stats-bar{grid-template-columns:1fr 1fr}header{padding:1rem}.logo-mark{font-size:1.5rem}.nav-tabs{padding:0 .5rem;overflow-x:auto}}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<header>
+  <div class="logo">
+    <div class="logo-mark">COLIMBOCAMOS</div>
+    <div class="logo-sub">Sistema de Incidencias</div>
+  </div>
+  <div class="online-dot">EN VIVO</div>
+</header>
+<div class="nav-tabs">
+  <div class="nav-tab active" id="tab-lista" onclick="showView('lista',this)">📋 Incidencias <span class="nav-badge" id="nav-count">0</span></div>
+  <div class="nav-tab" id="tab-nueva" onclick="showView('nueva',this)">＋ Nueva Incidencia</div>
+</div>
+
+<!-- LISTA -->
+<div class="view active" id="view-lista">
+  <div class="list-wrap">
+    <div class="stats-bar">
+      <div class="stat-card s-total"><div class="stat-n" id="s-total">0</div><div class="stat-l">Total</div></div>
+      <div class="stat-card s-grave"><div class="stat-n" id="s-grave">0</div><div class="stat-l">Graves</div></div>
+      <div class="stat-card s-media"><div class="stat-n" id="s-media">0</div><div class="stat-l">Medias</div></div>
+      <div class="stat-card s-hoy"><div class="stat-n" id="s-hoy">0</div><div class="stat-l">Hoy</div></div>
+    </div>
+    <div class="toolbar">
+      <input class="search-box" id="search" placeholder="🔍  Buscar por profesor, alumno, descripción..." oninput="renderList()"/>
+      <select class="filter-sel" id="filter-profe" onchange="renderList()"><option value="">Todos los profesores</option></select>
+      <select class="filter-sel" id="filter-sev" onchange="renderList()">
+        <option value="">Todas las gravedades</option>
+        <option>Leve</option><option>Media</option><option>Grave</option>
+      </select>
+      <button class="btn-export" onclick="exportCSV()">⬇ CSV</button>
+    </div>
+    <div id="lista-container"><div class="loading"><div class="dot-load"></div><div class="dot-load"></div><div class="dot-load"></div></div></div>
+  </div>
+</div>
+
+<!-- NUEVA -->
+<div class="view" id="view-nueva">
+  <div class="form-wrap">
+    <div class="section-title">Nueva Incidencia</div>
+    <div class="section-sub">Solo datos reales. Queda registrado y visible para todos con el enlace.</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Tu nombre (alumno/a)</label>
+        <input type="text" id="f-alumno" placeholder="Nombre completo"/>
+      </div>
+      <div class="form-field">
+        <label>Fecha del incidente</label>
+        <input type="date" id="f-fecha"/>
+      </div>
+      <div class="form-field">
+        <label>Profesor/a</label>
+        <input type="text" id="f-profe" placeholder="Nombre del profesor/a"/>
+      </div>
+      <div class="form-field">
+        <label>Asignatura</label>
+        <input type="text" id="f-asig" placeholder="Ej: Matemáticas, Historia..."/>
+      </div>
+      <div class="form-field full">
+        <label>Tipo de incidencia</label>
+        <select id="f-tipo">
+          <option value="">— Selecciona el tipo —</option>
+          <option>Trato inadecuado</option>
+          <option>Injusticia en calificación</option>
+          <option>Falta de respeto</option>
+          <option>No impartió clase correctamente</option>
+          <option>Acoso o presión</option>
+          <option>Retraso injustificado</option>
+          <option>Expulsión injusta</option>
+          <option>Favoritismo</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label>Gravedad</label>
+        <div class="sev-row">
+          <button class="sev-opt" data-v="Leve" onclick="pickSev(this,'s-leve')">🟢 Leve</button>
+          <button class="sev-opt" data-v="Media" onclick="pickSev(this,'s-media')">🟡 Media</button>
+          <button class="sev-opt" data-v="Grave" onclick="pickSev(this,'s-grave')">🔴 Grave</button>
+        </div>
+      </div>
+      <div class="form-field full">
+        <label>¿Qué pasó exactamente?</label>
+        <textarea id="f-desc" placeholder="Describe los hechos tal como ocurrieron. Sin exageraciones, sin inventar."></textarea>
+      </div>
+      <div class="form-field full">
+        <label>Capturas o fotos (opcional, máx. 4)</label>
+        <div class="img-upload" onclick="document.getElementById('f-imgs').click()">
+          <input type="file" id="f-imgs" accept="image/*" multiple onchange="previewImgs(this)"/>
+          <div class="img-upload-icon">📎</div>
+          <div class="img-upload-text">Haz clic para adjuntar imágenes</div>
+        </div>
+        <div class="img-previews" id="img-previews"></div>
+      </div>
+    </div>
+    <button class="btn-submit" id="btn-submit" onclick="submitIncidencia()">REGISTRAR INCIDENCIA →</button>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+  <img id="lb-img" src="" alt=""/>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let allData=[];
+let pickedSev='';
+let pendingImgs=[];
+let votedIds=[];
+try{votedIds=JSON.parse(localStorage.getItem('colimbo-votes')||'[]')}catch(e){}
+const SKEY='colimbocamos-v2';
+
+document.getElementById('f-fecha').valueAsDate=new Date();
+loadData();
+setInterval(loadData,20000);
+
+async function loadData(){
+  try{
+    const r=await window.storage.get(SKEY,true);
+    allData=r?JSON.parse(r.value):[];
+  }catch(e){allData=[];}
+  renderList();updateStats();updateProfesFilter();
+}
+
+async function saveData(){
+  try{await window.storage.set(SKEY,JSON.stringify(allData),true);}
+  catch(e){toast('Error al guardar en la nube',true);}
+}
+
+function showView(v,tab){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  tab.classList.add('active');
+}
+
+function pickSev(btn,cls){
+  document.querySelectorAll('.sev-opt').forEach(b=>b.className='sev-opt');
+  btn.classList.add(cls);pickedSev=btn.dataset.v;
+}
+
+function previewImgs(input){
+  pendingImgs=[];document.getElementById('img-previews').innerHTML='';
+  Array.from(input.files).slice(0,4).forEach(file=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      pendingImgs.push(e.target.result);
+      const img=document.createElement('img');
+      img.src=e.target.result;img.className='img-preview';
+      document.getElementById('img-previews').appendChild(img);
+    };r.readAsDataURL(file);
+  });
+}
+
+async function submitIncidencia(){
+  const alumno=document.getElementById('f-alumno').value.trim();
+  const fecha=document.getElementById('f-fecha').value;
+  const profe=document.getElementById('f-profe').value.trim();
+  const asig=document.getElementById('f-asig').value.trim();
+  const tipo=document.getElementById('f-tipo').value;
+  const desc=document.getElementById('f-desc').value.trim();
+  if(!alumno||!profe||!tipo||!desc||!pickedSev){toast('Rellena todos los campos obligatorios',true);return;}
+  const btn=document.getElementById('btn-submit');
+  btn.disabled=true;btn.textContent='Guardando...';
+  const inc={id:Date.now().toString(),alumno,fecha,profe,asig,tipo,desc,severidad:pickedSev,imgs:[...pendingImgs],votos:0,ts:new Date().toISOString()};
+  allData.unshift(inc);
+  await saveData();
+  ['f-alumno','f-profe','f-asig','f-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-tipo').value='';
+  document.getElementById('f-fecha').valueAsDate=new Date();
+  document.getElementById('f-imgs').value='';
+  document.getElementById('img-previews').innerHTML='';
+  document.querySelectorAll('.sev-opt').forEach(b=>b.className='sev-opt');
+  pickedSev='';pendingImgs=[];
+  btn.disabled=false;btn.textContent='REGISTRAR INCIDENCIA →';
+  renderList();updateStats();updateProfesFilter();
+  toast('Incidencia registrada y visible para todos');
+  setTimeout(()=>showView('lista',document.getElementById('tab-lista')),800);
+}
+
+async function vote(id){
+  const idx=allData.findIndex(i=>i.id===id);if(idx===-1)return;
+  const already=votedIds.includes(id);
+  if(already){allData[idx].votos=Math.max(0,(allData[idx].votos||0)-1);votedIds=votedIds.filter(v=>v!==id);}
+  else{allData[idx].votos=(allData[idx].votos||0)+1;votedIds.push(id);}
+  try{localStorage.setItem('colimbo-votes',JSON.stringify(votedIds));}catch(e){}
+  await saveData();renderList();
+}
+
+async function deleteInc(id){
+  if(!confirm('¿Eliminar esta incidencia?'))return;
+  allData=allData.filter(i=>i.id!==id);
+  await saveData();renderList();updateStats();updateProfesFilter();
+  toast('Incidencia eliminada');
+}
+
+function renderList(){
+  const q=(document.getElementById('search')||{value:''}).value.toLowerCase();
+  const fp=(document.getElementById('filter-profe')||{value:''}).value;
+  const fs=(document.getElementById('filter-sev')||{value:''}).value;
+  let data=[...allData];
+  if(q)data=data.filter(i=>(i.profe+i.alumno+i.desc+i.tipo).toLowerCase().includes(q));
+  if(fp)data=data.filter(i=>i.profe===fp);
+  if(fs)data=data.filter(i=>i.severidad===fs);
+  document.getElementById('nav-count').textContent=allData.length;
+  const container=document.getElementById('lista-container');
+  if(!data.length){container.innerHTML='<div class="empty"><div class="empty-icon">📭</div><div>No hay incidencias que mostrar</div></div>';return;}
+  container.innerHTML=data.map(inc=>{
+    const sc=inc.severidad==='Grave'?'grave':inc.severidad==='Media'?'media':'leve';
+    const fecha=inc.fecha?new Date(inc.fecha+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'}):'';
+    const votos=inc.votos||0;
+    const voted=votedIds.includes(inc.id);
+    const imgs=inc.imgs&&inc.imgs.length?'<div class="inc-images">'+inc.imgs.map(s=>'<img class="inc-img" src="'+s+'" alt="" onclick="openLb(this.src)"/>').join('')+'</div>':'';
+    return '<div class="incident-card"><div class="inc-header"><div class="sev-bar '+sc+'"></div><div class="inc-main"><div class="inc-row1"><div class="inc-profe">&#128104;&#8205;&#127979; '+esc(inc.profe)+'</div><div class="inc-time">'+fecha+'</div></div><div class="inc-tags"><span class="tag tag-alumno">'+esc(inc.alumno)+'</span>'+(inc.asig?'<span class="tag tag-asig">'+esc(inc.asig)+'</span>':'')+'<span class="tag tag-tipo">'+esc(inc.tipo)+'</span><span class="tag tag-sev '+sc+'">'+esc(inc.severidad)+'</span></div><div class="inc-desc">'+esc(inc.desc)+'</div></div><div class="inc-actions"><button class="vote-btn'+(voted?' voted':'')+'" onclick="vote(\''+inc.id+'\')">&#9650; '+votos+'</button><button class="del-btn" onclick="deleteInc(\''+inc.id+'\')" title="Eliminar">&#x2715;</button></div></div>'+imgs+'</div>';
+  }).join('');
+}
+
+function updateStats(){
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById('s-total').textContent=allData.length;
+  document.getElementById('s-grave').textContent=allData.filter(i=>i.severidad==='Grave').length;
+  document.getElementById('s-media').textContent=allData.filter(i=>i.severidad==='Media').length;
+  document.getElementById('s-hoy').textContent=allData.filter(i=>i.fecha===today).length;
+}
+
+function updateProfesFilter(){
+  const sel=document.getElementById('filter-profe');const cur=sel.value;
+  const profes=[...new Set(allData.map(i=>i.profe))].sort();
+  sel.innerHTML='<option value="">Todos los profesores</option>'+profes.map(p=>'<option'+(p===cur?' selected':'')+'>'+esc(p)+'</option>').join('');
+}
+
+function exportCSV(){
+  if(!allData.length){toast('No hay datos que exportar',true);return;}
+  const rows=[['ID','Fecha','Alumno','Profesor','Asignatura','Tipo','Gravedad','Votos','Descripcion']];
+  allData.forEach(i=>rows.push([i.id,i.fecha,i.alumno,i.profe,i.asig||'',i.tipo,i.severidad,i.votos||0,'"'+i.desc.replace(/"/g,'""')+'"']));
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download='colimbocamos_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();toast('CSV descargado');
+}
+
+function openLb(src){document.getElementById('lb-img').src=src;document.getElementById('lightbox').classList.add('open');}
+let toastTimer;
+function toast(msg,isErr=false){
+  const el=document.getElementById('toast');el.textContent=msg;
+  el.className='toast show'+(isErr?' err':'');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
+}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+</script>
+</body>
+</html>
